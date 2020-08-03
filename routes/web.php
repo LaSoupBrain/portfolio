@@ -20,4 +20,6 @@ Route::get('/', function () {
 Route::prefix('admin')->namespace('Admin')->group(function () {
     # Projects routes
     Route::get('/projects', 'ProjectsController@index')->name('projects.index');
+    Route::post('/projects', 'ProjectsController@store')->name('projects.store');
+    Route::get('/projects/create', 'ProjectsController@create')->name('projects.create');
 });
