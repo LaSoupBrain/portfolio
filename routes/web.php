@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+# Portfolio (User side)
+Route::prefix('/')->namespace('Portfolio')->group(function () {
+    # Contact page
+    Route::get('/contact', 'ContactController@index')->name('contact');
+});
