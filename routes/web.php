@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix('admin')->namespace('Admin')->group(function () {
+    # Projects routes
+    Route::get('/projects', 'ProjectsController@index')->name('projects.index');
+});
