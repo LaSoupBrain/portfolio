@@ -21,7 +21,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.projects.index');
+        return view('admin.pages.projects.index', ['projects' => Projects::all()]);
     }
 
     /**
@@ -42,7 +42,9 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        Projects::create($this->validateProjects($request));
+
+        return redirect()->route('projects.index');
     }
 
     /**
@@ -88,5 +90,22 @@ class ProjectsController extends Controller
     public function destroy(Projects $projects)
     {
         //
+    }
+
+    /**
+     * Validate article attributes.
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function validateProjects(Request $request): array
+    {
+        return $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required',
+            'link' => 'required',
+            'slug' => 'required',
+        ]);
     }
 }

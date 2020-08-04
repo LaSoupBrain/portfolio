@@ -3,6 +3,8 @@
 @section('content')
     <h1>Create page</h1>
 
+    <a href="{{ route('projects.index') }}">List page</a>
+
     <form action="{{ route('projects.store') }}" method="POST">
         @csrf
         <label>Name</label>
