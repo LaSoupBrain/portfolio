@@ -20,6 +20,7 @@ class Project extends Model
         'name',
         'description',
         'link',
-        'slug'
+        'slug',
+        'image'
     ];
 }

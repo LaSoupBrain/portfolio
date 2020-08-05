@@ -7,6 +7,8 @@
 
     <p>Name: {{ $project->name }}</p>
     <p>Description: {{ $project->description }}</p>
-    <p>Link: {{ $project->link }}</p>
+    <p>Url: {{ $project->url }}</p>
     <p>Slug: {{ $project->slug }}</p>
+    <p>Image: </p>
+    <img src="{{ asset('images/' . $project->image) }}">
 @endsection

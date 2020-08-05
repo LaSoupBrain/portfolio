@@ -50,13 +50,16 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $projectRequest)
     {
-        $projectRequest->request->add(
-            ['slug' => Str::slug($projectRequest->name)]
-        );
+        $project = new Project();
 
-        Project::create($projectRequest->all());
+        $project->name = $projectRequest->name;
+        $project->description = $projectRequest->description;
+        $project->url = $projectRequest->url;
+        $project->image = $this->uploadImage($projectRequest);
+        $project->slug = Str::slug($projectRequest->name);
+        $project->save();
 
-        return redirect()->route('project.index')->with('status', 'Successfully Inserted!');;
+        return redirect()->route('project.index')->with('status', 'Successfully Inserted!');
     }
 
     /**
@@ -97,13 +100,12 @@ class ProjectController extends Controller
      */
     public function update(ProjectRequest $projectRequest, Project $project)
     {
-        if ($projectRequest->name != $project->name) {
-            $projectRequest->request->add(
-                ['slug' => Str::slug($projectRequest->name)]
-            );
-        }
-
-        $project->update($projectRequest->all());
+        $project->name = $projectRequest->name;
+        $project->description = $projectRequest->description;
+        $project->url = $projectRequest->url;
+        $project->image = $this->updateImage($projectRequest, $project->image);
+        $project->slug = Str::slug($projectRequest->name);
+        $project->save();
 
         return redirect()->route('project.index')->with('status', 'Successfully Updated!');
     }
@@ -123,5 +125,55 @@ class ProjectController extends Controller
         $project->delete();
 
         return redirect()->back()->with('status', 'Successfully Deleted!');
+    }
+
+    /**
+     * Upload image.
+     *
+     * @param $projectRequest
+     *
+     * @return string
+     */
+    public function uploadImage($projectRequest)
+    {
+        $image = $projectRequest->image;
+
+        $filename = sprintf(
+            '%s.%s',
+            Str::slug(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)),
+            $image->guessExtension()
+        );
+
+        $image->move(public_path('images'), $filename);
+
+        return $filename;
+    }
+
+    /**
+     * Upload image.
+     *
+     * @param $projectRequest
+     *
+     * @return string
+     */
+    public function updateImage($projectRequest, $oldImage)
+    {
+        $image = $projectRequest->image;
+
+        if (empty($image)) {
+            $result = $oldImage;
+        } else {
+            $filename = sprintf(
+                '%s.%s',
+                Str::slug(pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME)),
+                $image->guessExtension()
+            );
+
+            $image->move(public_path('images'), $filename);
+
+            $result = $filename;
+        }
+
+        return $result;
     }
 }

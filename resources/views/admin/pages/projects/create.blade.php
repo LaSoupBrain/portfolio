@@ -5,7 +5,7 @@
 
     <a href="{{ route('project.index') }}">List page</a>
 
-    <form action="{{ route('project.store') }}" method="POST">
+    <form action="{{ route('project.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <label>Name</label>
         <input type="text" name="name" value="{{ old('name') }}" />
@@ -23,11 +23,16 @@
 
         <br>
 
-        <label>Link</label>
-        <input type="text" name="link" value="{{ old('link') }}" />
-        @error('link')
-            <p style="color: red">{{ $errors->first('link') }}</p>
+        <label>Url</label>
+        <input type="text" name="url" value="{{ old('url') }}" />
+        @error('url')
+            <p style="color: red">{{ $errors->first('url') }}</p>
         @enderror
+
+        <br>
+
+        <input type="file" name="image" id="image">
+
         <br>
 
         <button type="submit">Save</button>

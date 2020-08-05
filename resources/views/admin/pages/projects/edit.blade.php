@@ -24,11 +24,16 @@
 
         <br>
 
-        <label>Link</label>
-        <input type="text" name="link" value="{{ $project->link }}" />
-        @error('link')
-            <p style="color: red">{{ $errors->first('link') }}</p>
+        <label>Url</label>
+        <input type="text" name="url" value="{{ $project->url }}" />
+        @error('url')
+            <p style="color: red">{{ $errors->first('url') }}</p>
         @enderror
+
+        <br>
+
+        <input type="file" name="image" id="image">
+
         <br>
 
         <button type="submit">Save</button>

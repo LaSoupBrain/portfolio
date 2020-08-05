@@ -12,7 +12,7 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Link</th>
+                    <th>Url</th>
                     <th>Created Date</th>
                     <th>Updated Date</th>
                     <th>Action</th>
@@ -30,7 +30,7 @@
                         <th>{{ $project->id }}</th>
                         <td>{{ $project->name }}</td>
                         <td>{{ $project->description }}</td>
-                        <td>{{ $project->link }}</td>
+                        <td>{{ $project->url }}</td>
                         <td>{{ $project->created_at }}</td>
                         <td>{{ $project->updated_at }}</td>
                         <td>
