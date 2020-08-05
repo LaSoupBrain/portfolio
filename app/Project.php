@@ -4,7 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Projects extends Model
+/**
+ * Class Project
+ *
+ * @package App
+ */
+class Project extends Model
 {
     /**
      * Assignable attributes.

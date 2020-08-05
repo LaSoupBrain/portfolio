@@ -18,8 +18,12 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->namespace('Admin')->group(function () {
-    # Projects routes
-    Route::get('/projects', 'ProjectsController@index')->name('projects.index');
-    Route::post('/projects', 'ProjectsController@store')->name('projects.store');
-    Route::get('/projects/create', 'ProjectsController@create')->name('projects.create');
+    # Project routes
+    Route::get('/projects', 'ProjectController@index')->name('project.index');
+    Route::post('/projects', 'ProjectController@store')->name('project.store');
+    Route::get('/projects/create', 'ProjectController@create')->name('project.create');
+    Route::get('/projects/{project}', 'ProjectController@show')->name('project.show');
+    Route::get('/projects/{project}/edit', 'ProjectController@edit')->name('project.edit');
+    Route::put('/projects/{project}', 'ProjectController@update')->name('project.update');
+    Route::get('/projects/{project}/delete', 'ProjectController@destroy')->name('project.delete');
 });

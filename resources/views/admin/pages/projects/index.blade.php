@@ -3,7 +3,7 @@
 @section('content')
     <h1>Projects page</h1>
 
-    <a href="{{ route('projects.create') }}">Create project</a>
+    <a href="{{ route('project.create') }}">Create</a>
     
     <div>
         <table>
@@ -34,11 +34,11 @@
                         <td>{{ $project->created_at }}</td>
                         <td>{{ $project->updated_at }}</td>
                         <td>
-                            <a href="#">Show</a>
+                            <a href="{{ route('project.show', $project) }}">Show</a>
                             |
-                            <a href="#">Edit</a>
+                            <a href="{{ route('project.edit', $project) }}">Update</a>
                             |
-                            <a href="#">Delete</a>
+                            <a href="{{ route('project.delete', $project) }}">Delete</a>
                         </td>
                     </tr>
                 @endforeach
