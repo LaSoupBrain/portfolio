@@ -18,6 +18,8 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @author Ali, Muamar
+     *
      * @return Response
      */
     public function index()
@@ -27,6 +29,8 @@ class ProjectController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @author Ali, Muamar
      *
      * @return Response
      */
@@ -39,6 +43,8 @@ class ProjectController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  ProjectRequest $projectRequest
+     *
+     * @author Ali, Muamar
      *
      * @return Response
      */
@@ -57,6 +63,8 @@ class ProjectController extends Controller
      * Display the specified resource.
      *
      * @param  Project  $project
+     *
+     * @author Ali, Muamar
      *
      * @return Response
      */
@@ -83,13 +91,17 @@ class ProjectController extends Controller
      * @param  ProjectRequest $projectRequest
      * @param  Project  $project
      *
+     * @author Ali, Muamar
+     *
      * @return Response
      */
     public function update(ProjectRequest $projectRequest, Project $project)
     {
-        $projectRequest->request->add(
-            ['slug' => Str::slug($projectRequest->name)]
-        );
+        if ($projectRequest->name != $project->name) {
+            $projectRequest->request->add(
+                ['slug' => Str::slug($projectRequest->name)]
+            );
+        }
 
         $project->update($projectRequest->all());
 
@@ -102,6 +114,7 @@ class ProjectController extends Controller
      * @param  Project  $project
      *
      * @throws \Exception
+     * @author Ali, Muamar
      *
      * @return Response
      */
