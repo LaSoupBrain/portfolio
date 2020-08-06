@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/projects', function () {
-    return view('Portfolio/page/project');
+    return view('portfolio/page/project');
 });
