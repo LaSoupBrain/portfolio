@@ -24,3 +24,7 @@ Route::get('/contact', function () {
 Route::get('/about', function () {
     return view('portfolio/page/about');
 });
+
+Route::get('/projects', function () {
+    return view('portfolio/page/project');
+});
