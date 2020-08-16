@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('portfolio/page/homepage');
 });
 
+Route::get('/contact', function () {
+    return view('portfolio/page/contact');
+});
+
 Route::get('/about', function () {
     return view('portfolio/page/about');
 });
