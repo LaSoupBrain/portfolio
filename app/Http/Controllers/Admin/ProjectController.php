@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
 use App\Project;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 /**
@@ -24,7 +25,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.projects.index', ['projects' => Project::all()]);
+        return view(
+            'admin.pages.projects.index',
+            ['projects' => Project::all()]
+        );
     }
 
     /**
@@ -42,7 +46,7 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ProjectRequest $projectRequest
+     * @param ProjectRequest $projectRequest
      *
      * @author Ali, Muamar
      *
@@ -59,13 +63,15 @@ class ProjectController extends Controller
         $project->slug = Str::slug($projectRequest->name);
         $project->save();
 
-        return redirect()->route('project.index')->with('status', 'Successfully Inserted!');
+        return redirect()
+            ->route('project.index')
+            ->with('status', 'Successfully Inserted!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  Project  $project
+     * @param Project $project
      *
      * @author Ali, Muamar
      *
@@ -73,28 +79,34 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return view('admin.pages.projects.show', ['project' => $project]);
+        return view(
+            'admin.pages.projects.show',
+            ['project' => $project]
+        );
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  Project  $project
+     * @param Project $project
      *
      * @return Response
      */
     public function edit(Project $project)
     {
-        return view('admin.pages.projects.edit', ['project' => $project]);
+        return view(
+            'admin.pages.projects.edit',
+            ['project' => $project]
+        );
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  ProjectRequest $projectRequest
-     * @param  Project  $project
+     * @param ProjectRequest $projectRequest
+     * @param Project $project
      *
-     * @author Ali, Muamar
+     * @author  Ali , Muamar
      *
      * @return Response
      */
@@ -107,13 +119,15 @@ class ProjectController extends Controller
         $project->slug = Str::slug($projectRequest->name);
         $project->save();
 
-        return redirect()->route('project.index')->with('status', 'Successfully Updated!');
+        return redirect()
+            ->route('project.index')
+            ->with('status', 'Successfully Updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Project  $project
+     * @param Project $project | model
      *
      * @throws \Exception
      * @author Ali, Muamar
@@ -123,18 +137,23 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
+        $this->deleteImage($project->image);
 
-        return redirect()->back()->with('status', 'Successfully Deleted!');
+        return redirect()
+            ->back()
+            ->with('status', 'Successfully Deleted!');
     }
 
     /**
      * Upload image.
      *
-     * @param $projectRequest
+     * @param ProjectRequest $projectRequest | handles the requests.
+     *
+     * @author Ali, Muamar
      *
      * @return string
      */
-    public function uploadImage($projectRequest)
+    public function uploadImage(ProjectRequest $projectRequest)
     {
         $image = $projectRequest->image;
 
@@ -152,15 +171,16 @@ class ProjectController extends Controller
     /**
      * Upload image.
      *
-     * @param $projectRequest
+     * @param $projectRequest | handles the requests.
+     * @param $oldImage | old image name.
+     *
+     * @author Ali, Muamar
      *
      * @return string
      */
     public function updateImage($projectRequest, $oldImage)
     {
-        $image = $projectRequest->image;
-
-        if (empty($image)) {
+        if (empty($image = $projectRequest->image)) {
             $result = $oldImage;
         } else {
             $filename = sprintf(
@@ -175,5 +195,19 @@ class ProjectController extends Controller
         }
 
         return $result;
+    }
+
+    /**
+     * Delete the uploaded image.
+     *
+     * @param string $imageName | image name.
+     *
+     * @author Ali, Muamar
+     */
+    public function deleteImage(string $imageName)
+    {
+        if (File::exists(public_path(sprintf('images/%s', $imageName)))){
+            File::delete(public_path(sprintf('images/%s', $imageName)));
+        }
     }
 }
